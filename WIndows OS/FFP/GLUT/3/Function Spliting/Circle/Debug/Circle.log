@@ -1,0 +1,5 @@
+﻿  CircleFunction.cpp
+d:\projects c++\real time rendering\opengl\ffp - glut\3\function spliting\circle\circlefunction.cpp(15): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+d:\projects c++\real time rendering\opengl\ffp - glut\3\function spliting\circle\circlefunction.cpp(27): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+  Circle.vcxproj -> D:\Projects C++\Real Time Rendering\OpenGL\FFP - GLUT\3\Function Spliting\Debug\Circle.exe
+  Circle.vcxproj -> D:\Projects C++\Real Time Rendering\OpenGL\FFP - GLUT\3\Function Spliting\Debug\Circle.pdb (Full PDB)

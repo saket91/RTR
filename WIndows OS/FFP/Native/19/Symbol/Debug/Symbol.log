@@ -1,0 +1,5 @@
+﻿  Source.cpp
+d:\projects c++\real time rendering\opengl\fixed function pipeline\19\symbol\source.cpp(19): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+d:\projects c++\real time rendering\opengl\fixed function pipeline\19\symbol\source.cpp(57): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Symbol.vcxproj -> D:\Projects C++\Real Time Rendering\OpenGL\Fixed Function PipeLine\19\Symbol\Debug\Symbol.exe
+  Symbol.vcxproj -> D:\Projects C++\Real Time Rendering\OpenGL\Fixed Function PipeLine\19\Symbol\Debug\Symbol.pdb (Full PDB)

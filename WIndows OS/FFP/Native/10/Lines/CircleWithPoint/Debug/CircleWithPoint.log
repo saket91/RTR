@@ -1,0 +1,5 @@
+﻿  CircleWithPoint.cpp
+d:\rtr\windows os\ffp\native\10\lines\circlewithpoint\circlewithpoint.cpp(333): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+  LINK : D:\RTR\WIndows OS\FFP\Native\10\Lines\Debug\CircleWithPoint.exe not found or not built by the last incremental link; performing full link
+  CircleWithPoint.vcxproj -> D:\RTR\WIndows OS\FFP\Native\10\Lines\Debug\CircleWithPoint.exe
+  CircleWithPoint.vcxproj -> D:\RTR\WIndows OS\FFP\Native\10\Lines\Debug\CircleWithPoint.pdb (Full PDB)

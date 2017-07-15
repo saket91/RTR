@@ -1,0 +1,5 @@
+﻿  CircleWithLine.cpp
+d:\rtr\windows os\ffp\native\10\lines\circlewithline\circlewithline.cpp(336): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\rtr\windows os\ffp\native\10\lines\circlewithline\circlewithline.cpp(337): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+  CircleWithLine.vcxproj -> D:\RTR\WIndows OS\FFP\Native\10\Lines\Debug\CircleWithLine.exe
+  CircleWithLine.vcxproj -> D:\RTR\WIndows OS\FFP\Native\10\Lines\Debug\CircleWithLine.pdb (Full PDB)

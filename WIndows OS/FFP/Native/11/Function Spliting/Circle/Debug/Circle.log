@@ -1,0 +1,4 @@
+﻿  CircleFunction.cpp
+d:\rtr\windows os\ffp\native\11\function spliting\circle\circlefunction.cpp(19): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+  Circle.vcxproj -> D:\RTR\WIndows OS\FFP\Native\11\Function Spliting\Debug\Circle.exe
+  Circle.vcxproj -> D:\RTR\WIndows OS\FFP\Native\11\Function Spliting\Debug\Circle.pdb (Full PDB)

@@ -1,0 +1,4 @@
+﻿  ConcentricCircle.cpp
+d:\projects c++\real time rendering\opengl\fixed function pipeline\17\concentriccircle\concentriccircle.cpp(34): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+  ConcentricCircle.vcxproj -> D:\Projects C++\Real Time Rendering\OpenGL\Fixed Function PipeLine\17\ConcentricCircle\Debug\ConcentricCircle.exe
+  ConcentricCircle.vcxproj -> D:\Projects C++\Real Time Rendering\OpenGL\Fixed Function PipeLine\17\ConcentricCircle\Debug\ConcentricCircle.pdb (Full PDB)

@@ -1,0 +1,5 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (GLUT.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  ConcentricCircle.cpp
+d:\projects c++\real time rendering\opengl\ffp - glut\9\concentriccircle\concentriccircle.cpp(16): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+  GLUT.vcxproj -> D:\Projects C++\Real Time Rendering\OpenGL\FFP - GLUT\9\ConcentricCircle\Debug\ConcentricCircle.exe
+  GLUT.vcxproj -> D:\Projects C++\Real Time Rendering\OpenGL\FFP - GLUT\9\ConcentricCircle\Debug\ConcentricCircle.pdb (Full PDB)

@@ -1,0 +1,5 @@
+﻿  ConcentricTriangle.cpp
+d:\projects c++\real time rendering\opengl\fixed function pipeline\16\concentrictriangle\concentrictriangle.cpp(14): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+d:\projects c++\real time rendering\opengl\fixed function pipeline\16\concentrictriangle\concentrictriangle.cpp(19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  ConcentricTriangle.vcxproj -> D:\Projects C++\Real Time Rendering\OpenGL\Fixed Function PipeLine\16\ConcentricTriangle\Debug\ConcentricTriangle.exe
+  ConcentricTriangle.vcxproj -> D:\Projects C++\Real Time Rendering\OpenGL\Fixed Function PipeLine\16\ConcentricTriangle\Debug\ConcentricTriangle.pdb (Full PDB)

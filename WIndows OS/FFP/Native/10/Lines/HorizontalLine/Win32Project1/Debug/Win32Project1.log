@@ -1,0 +1,5 @@
+﻿  HorizontalLine.cpp
+d:\projects c++\real time rendering\opengl\fixed function pipeline\10\lines\horizontalline\win32project1\horizontalline.cpp(798): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\projects c++\real time rendering\opengl\fixed function pipeline\10\lines\horizontalline\win32project1\horizontalline.cpp(799): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+  Win32Project1.vcxproj -> D:\Projects C++\Real Time Rendering\OpenGL\Fixed Function PipeLine\10\Lines\HorizontalLine\Win32Project1\Debug\Win32Project1.exe
+  Win32Project1.vcxproj -> D:\Projects C++\Real Time Rendering\OpenGL\Fixed Function PipeLine\10\Lines\HorizontalLine\Win32Project1\Debug\Win32Project1.pdb (Full PDB)

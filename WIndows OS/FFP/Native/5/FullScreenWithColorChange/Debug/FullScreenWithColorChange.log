@@ -1,0 +1,6 @@
+﻿  FullScreenWithColorChange.cpp
+d:\projects c++\real time rendering\opengl\fixed function pipeline\5\fullscreenwithcolorchange\fullscreenwithcolorchange.cpp(30): warning C4800: 'BOOL': forcing value to bool 'true' or 'false' (performance warning)
+d:\projects c++\real time rendering\opengl\fixed function pipeline\5\fullscreenwithcolorchange\fullscreenwithcolorchange.cpp(34): warning C4800: 'BOOL': forcing value to bool 'true' or 'false' (performance warning)
+d:\projects c++\real time rendering\opengl\fixed function pipeline\5\fullscreenwithcolorchange\fullscreenwithcolorchange.cpp(109): warning C4101: 'messagesg': unreferenced local variable
+  FullScreenWithColorChange.vcxproj -> D:\Projects C++\Real Time Rendering\OpenGL\Fixed Function PipeLine\5\FullScreenWithColorChange\Debug\FullScreenWithColorChange.exe
+  FullScreenWithColorChange.vcxproj -> D:\Projects C++\Real Time Rendering\OpenGL\Fixed Function PipeLine\5\FullScreenWithColorChange\Debug\FullScreenWithColorChange.pdb (Full PDB)

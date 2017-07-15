@@ -1,0 +1,6 @@
+﻿  FullScreencpp.cpp
+d:\projects c++\real time rendering\opengl\fixed function pipeline\4\fullscreen\fullscreencpp.cpp(22): warning C4800: 'BOOL': forcing value to bool 'true' or 'false' (performance warning)
+d:\projects c++\real time rendering\opengl\fixed function pipeline\4\fullscreen\fullscreencpp.cpp(26): warning C4800: 'BOOL': forcing value to bool 'true' or 'false' (performance warning)
+d:\projects c++\real time rendering\opengl\fixed function pipeline\4\fullscreen\fullscreencpp.cpp(107): warning C4101: 'messagesg': unreferenced local variable
+  FullScreen.vcxproj -> D:\Projects C++\Real Time Rendering\OpenGL\Fixed Function PipeLine\4\FullScreen\Debug\FullScreen.exe
+  FullScreen.vcxproj -> D:\Projects C++\Real Time Rendering\OpenGL\Fixed Function PipeLine\4\FullScreen\Debug\FullScreen.pdb (Full PDB)
