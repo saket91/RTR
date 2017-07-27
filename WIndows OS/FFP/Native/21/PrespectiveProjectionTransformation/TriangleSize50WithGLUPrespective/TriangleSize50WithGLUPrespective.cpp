@@ -290,6 +290,8 @@ void display(void)
 	//code 
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	gluLookAt(0.0, 0.0, 5.0, 0, 0, 0, 0, 1, 0);
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
