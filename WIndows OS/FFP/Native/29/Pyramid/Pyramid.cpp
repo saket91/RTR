@@ -3,14 +3,63 @@
 #include <gl/GLU.h>
 
 #define WIN_WIDTH  800
-#define WIN_HEIGHT 800
+#define WIN_HEIGHT 600
 
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"glu32.lib")
 
-#define _USE_MATH_DEFINES
-#include "math.h"
+float gAngle = 0.0f;
+//Draw function with hard coded values for now
+void Update()
+{
+	gAngle += 0.01f;
 
+	if (gAngle > 360)
+	{
+		gAngle = 0.0f;
+	}
+}
+
+
+void DrawPyramid()
+{
+	glBegin(GL_TRIANGLES);
+	{
+		////Front face
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 1.0f, 0.0f); //Apex
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(-1.0f, -1.0f, 1.0f); //Left front
+		glColor3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(1.0f, -1.0f, 1.0f); //Right front
+
+		//Left face
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 1.0f, 0.0f); //Apex
+		glColor3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(-1.0f, -1.0f, -1.0f); //Left back
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(-1.0f, -1.0f, 1.0f); //Left front
+
+		//Right face
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 1.0f, 0.0f); //Apex
+		glColor3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(1.0f, -1.0f, 1.0f); //Right front
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(1.0f, -1.0f, -1.0f); //Right back
+
+		//Back face
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 1.0f, 0.0f); //Apex
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(1.0f, -1.0f, -1.0f); //Right back
+		glColor3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(-1.0f, -1.0f, -1.0f); //Left back
+
+	}glEnd();
+
+}
 
 
 //Prototype Of WndProc() declared Globally
@@ -20,9 +69,6 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HWND ghwnd = NULL;
 HDC ghdc = NULL;
 HGLRC ghrc = NULL;
-
-int gWidth = 0;
-int gHeight = 0;
 
 DWORD dwStyle;
 WINDOWPLACEMENT wpPrev = { sizeof(WINDOWPLACEMENT) };
@@ -56,7 +102,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 	wndclass.cbClsExtra = 0;
 	wndclass.cbWndExtra = 0;
 	wndclass.hInstance = hInstance;
-	wndclass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	wndclass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 	wndclass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wndclass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
@@ -70,9 +116,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 	//Create Window
 	hwnd = CreateWindowEx(WS_EX_APPWINDOW,
 		szClassName,
-		TEXT("OpenGL Fixed Function Pipeline using Native Windowing : First Window"),
+		TEXT("OpenGL Fixed Function Pipeline using Native Windowing "),
 		WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE,
-		0,
+		600,
 		0,
 		WIN_WIDTH,
 		WIN_HEIGHT,
@@ -109,6 +155,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 			{
 				if (gbEscapeKeyIsPressed == true)
 					bDone = true;
+				Update();
 				display();
 			}
 		}
@@ -158,9 +205,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT imsg, WPARAM wParam, LPARAM lparam)
 			gbEscapeKeyIsPressed = true;
 			break;
 
-		case 0x30:
-			glViewport(0, 0, (GLint)gWidth/4, (GLint)gHeight/4);
-			break;
 		case 0x46: // F
 			if (gbFullScreen == false)
 			{
@@ -245,6 +289,7 @@ void initialize(void)
 	pfd.cBlueBits = 8;
 	pfd.cGreenBits = 8;
 	pfd.cAlphaBits = 8;
+	pfd.cDepthBits = 32; //Changes for 3D window
 
 	ghdc = GetDC(ghwnd);
 
@@ -277,7 +322,11 @@ void initialize(void)
 		ghdc = NULL;
 	}
 
-	glClearColor(0.0f, 1.0f, 1.0f, 0.0f);
+	glClearDepth(1.0f);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	resize(WIN_WIDTH, WIN_HEIGHT);
 }
@@ -285,9 +334,17 @@ void initialize(void)
 void display(void)
 {
 	//code 
-	
-	glClear(GL_COLOR_BUFFER_BIT);
-	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Rendering Command
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glTranslatef(0.0f, 0.0f, -5.0f);
+	glRotatef(gAngle, 0, 1, 0);
+
+	DrawPyramid();
+	//glFlush(); -- Commented single buffer api
 	SwapBuffers(ghdc);
 }
 
@@ -297,11 +354,12 @@ void resize(int width, int height)
 	if (height == 0)
 		height = 1;
 
-	gWidth = width;
-	gHeight = height;
+	glViewport(0, 0, (GLsizei)width, (GLsizei)height);
+	
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
 
-	//glViewport(50, 50, 10, 10);
-
+	gluPerspective(45, ((GLfloat)width / (GLfloat)height), 0.1, 100.0);
 }
 
 void uninitialize()

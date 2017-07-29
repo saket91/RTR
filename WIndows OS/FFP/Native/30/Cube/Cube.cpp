@@ -3,14 +3,10 @@
 #include <gl/GLU.h>
 
 #define WIN_WIDTH  800
-#define WIN_HEIGHT 800
+#define WIN_HEIGHT 600
 
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"glu32.lib")
-
-#define _USE_MATH_DEFINES
-#include "math.h"
-
 
 
 //Prototype Of WndProc() declared Globally
@@ -21,18 +17,75 @@ HWND ghwnd = NULL;
 HDC ghdc = NULL;
 HGLRC ghrc = NULL;
 
-int gWidth = 0;
-int gHeight = 0;
-
 DWORD dwStyle;
 WINDOWPLACEMENT wpPrev = { sizeof(WINDOWPLACEMENT) };
 
 bool gbActiveWindow = false;
 bool gbEscapeKeyIsPressed = false;
 bool gbFullScreen = false;
+float gAngle = 0.0f;
+
+//Draw Function
+void Update()
+{
+	gAngle += 0.1f;
+
+	if (gAngle > 360)
+	{
+		gAngle = 0.0f;
+	}
+}
+
+void DrawCube()
+{
+	glBegin(GL_QUADS);
+	{
+		//Front Face
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(-1.0f, 1.0f, 1.0f); //top Left front
+		glVertex3f(-1.0f, -1.0f, 1.0f); //bottom Left front
+		glVertex3f(1.0f, -1.0f, 1.0f); //bottom Right front
+		glVertex3f(1.0f, 1.0f, 1.0f); //top Right front
+
+        //Back Face -- make Z negative of front face
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(-1.0f, 1.0f, -1.0f); 
+		glVertex3f(-1.0f, -1.0f, -1.0f); 
+		glVertex3f(1.0f, -1.0f, -1.0f); 
+		glVertex3f(1.0f, 1.0f, -1.0f); 
+
+		//Left Face
+		glColor3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(-1.0f, 1.0f, -1.0f); //top Left back
+		glVertex3f(-1.0f, -1.0f, -1.0f); //bottom Left back
+		glVertex3f(-1.0f, -1.0f, 1.0f); //bottom Left front
+		glVertex3f(-1.0f, 1.0f, 1.0f); //top Left front
+	     
+        //Right Face
+		glColor3f(1.0f, 0.0f, 1.0f);
+		glVertex3f(1.0f, 1.0f, -1.0f); 
+		glVertex3f(1.0f, -1.0f, -1.0f); 
+		glVertex3f(1.0f, -1.0f, 1.0f); 
+		glVertex3f(1.0f, 1.0f, 1.0f); 
+		
+		//Top Face
+		glColor3f(0.0f, 1.0f, 1.0f);
+		glVertex3f(1.0f, 1.0f, 1.0f); //top Right front
+		glVertex3f(1.0f, 1.0f, -1.0f); //top Right back
+		glVertex3f(-1.0f, 1.0f, -1.0f); //top Left back
+		glVertex3f(-1.0f, 1.0f, 1.0f); //top Left front
+		
+		//Bottom Face
+		glColor3f(1.0f, 1.0f, 0.0f);
+		glVertex3f(1.0f, -1.0f, 1.0f); 
+		glVertex3f(1.0f, -1.0f, -1.0f); 
+		glVertex3f(-1.0f, -1.0f, -1.0f);
+		glVertex3f(-1.0f, -1.0f, 1.0f); 
+		
+	}glEnd();
+}
 
 //Main()
-
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int iCmdShow)
 {
 	//Function Prototype
@@ -56,7 +109,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 	wndclass.cbClsExtra = 0;
 	wndclass.cbWndExtra = 0;
 	wndclass.hInstance = hInstance;
-	wndclass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	wndclass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 	wndclass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wndclass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
@@ -70,9 +123,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 	//Create Window
 	hwnd = CreateWindowEx(WS_EX_APPWINDOW,
 		szClassName,
-		TEXT("OpenGL Fixed Function Pipeline using Native Windowing : First Window"),
+		TEXT("OpenGL Fixed Function Pipeline using Native Windowing "),
 		WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE,
-		0,
+		600,
 		0,
 		WIN_WIDTH,
 		WIN_HEIGHT,
@@ -109,6 +162,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 			{
 				if (gbEscapeKeyIsPressed == true)
 					bDone = true;
+				Update();
 				display();
 			}
 		}
@@ -158,9 +212,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT imsg, WPARAM wParam, LPARAM lparam)
 			gbEscapeKeyIsPressed = true;
 			break;
 
-		case 0x30:
-			glViewport(0, 0, (GLint)gWidth/4, (GLint)gHeight/4);
-			break;
 		case 0x46: // F
 			if (gbFullScreen == false)
 			{
@@ -245,6 +296,7 @@ void initialize(void)
 	pfd.cBlueBits = 8;
 	pfd.cGreenBits = 8;
 	pfd.cAlphaBits = 8;
+	pfd.cDepthBits = 32; //Changes for 3D window
 
 	ghdc = GetDC(ghwnd);
 
@@ -277,7 +329,12 @@ void initialize(void)
 		ghdc = NULL;
 	}
 
-	glClearColor(0.0f, 1.0f, 1.0f, 0.0f);
+	glClearDepth(1.0f);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
 
 	resize(WIN_WIDTH, WIN_HEIGHT);
 }
@@ -285,9 +342,17 @@ void initialize(void)
 void display(void)
 {
 	//code 
-	
-	glClear(GL_COLOR_BUFFER_BIT);
-	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Rendering Command
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glTranslatef(0.0f, 0.0f, -6.0f);
+	glRotatef(gAngle, 1, 1, 1);
+	DrawCube();
+
+	//glFlush(); -- Commented single buffer api
 	SwapBuffers(ghdc);
 }
 
@@ -297,11 +362,11 @@ void resize(int width, int height)
 	if (height == 0)
 		height = 1;
 
-	gWidth = width;
-	gHeight = height;
+	glViewport(0, 0, (GLsizei)width, (GLsizei)height);
 
-	//glViewport(50, 50, 10, 10);
-
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45, ((GLfloat)width / (GLfloat)height), 0.1, 100.0);
 }
 
 void uninitialize()
