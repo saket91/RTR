@@ -1,12 +1,10 @@
 #include <Windows.h>
 #include <gl/GL.h>
-#include <gl/GLU.h>
 
 #define WIN_WIDTH  800
 #define WIN_HEIGHT 600
 
 #pragma comment(lib,"opengl32.lib")
-#pragma comment(lib,"glu32.lib")
 
 // Function for drawing filled triangle
 // This function only  draws the triangle doesn't change color
@@ -290,12 +288,11 @@ void display(void)
 	//code 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	gluLookAt(0.0, 0.0, 5.0, 0, 0, 0, 0, 1, 0);
-
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
 	//Rendering Command
+
 	DrawTriangle(0.0f, 1.0f, 0.0f, -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f);
 
 	//glFlush(); -- Commented single buffer api
@@ -312,8 +309,7 @@ void resize(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	
-	gluPerspective(0, ((GLfloat)width /(GLfloat)height), 0.1, 100.0);
+	glFrustum(-1.0, 1.0, -1.0, 1.0, -1, 1);
 }
 
 void uninitialize()

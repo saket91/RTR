@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TriangleSize1WithGLFrustum.cpp">
+    <ClCompile Include="RotateMultipleGeometries.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

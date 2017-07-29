@@ -290,11 +290,11 @@ void display(void)
 	//code 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	gluLookAt(0.0, 0.0, 5.0, 0, 0, 0, 0, 1, 0);
-
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	glTranslatef(0.0f, 0.0f, -3.0f);
+	
 	//Rendering Command
 	DrawTriangle(0.0f, 1.0f, 0.0f, -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f);
 
@@ -312,8 +312,7 @@ void resize(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	
-	gluPerspective(0, ((GLfloat)width /(GLfloat)height), 0.1, 100.0);
+	gluPerspective(45, ((GLfloat)width / (GLfloat)height), 0.1, 100.0);
 }
 
 void uninitialize()

@@ -3,24 +3,15 @@
 #include <gl/GLU.h>
 
 #define WIN_WIDTH  800
-#define WIN_HEIGHT 600
+#define WIN_HEIGHT 800
 
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"glu32.lib")
 
-// Function for drawing filled triangle
-// This function only  draws the triangle doesn't change color
-void DrawTriangle(GLfloat point1X, GLfloat point1Y, GLfloat point1Z,
-	GLfloat point2X, GLfloat point2Y, GLfloat point2Z,
-	GLfloat point3X, GLfloat point3Y, GLfloat point3Z)
-{
-	glBegin(GL_TRIANGLES);
-	{
-		glVertex3f(point1X, point1Y, point1Z);
-		glVertex3f(point2X, point2Y, point2Z);
-		glVertex3f(point3X, point3Y, point3Z);
-	}glEnd();
-}
+#define _USE_MATH_DEFINES
+#include "math.h"
+
+
 
 //Prototype Of WndProc() declared Globally
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -62,7 +53,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 	wndclass.cbClsExtra = 0;
 	wndclass.cbWndExtra = 0;
 	wndclass.hInstance = hInstance;
-	wndclass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+	wndclass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	wndclass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wndclass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);
@@ -76,9 +67,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 	//Create Window
 	hwnd = CreateWindowEx(WS_EX_APPWINDOW,
 		szClassName,
-		TEXT("OpenGL Fixed Function Pipeline using Native Windowing "),
+		TEXT("OpenGL Fixed Function Pipeline using Native Windowing : First Window"),
 		WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE,
-		600,
+		0,
 		0,
 		WIN_WIDTH,
 		WIN_HEIGHT,
@@ -280,7 +271,7 @@ void initialize(void)
 		ghdc = NULL;
 	}
 
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.0f, 1.0f, 1.0f, 0.0f);
 
 	resize(WIN_WIDTH, WIN_HEIGHT);
 }
@@ -288,17 +279,10 @@ void initialize(void)
 void display(void)
 {
 	//code 
+	glViewport(50, 50, 10, 10);
 	glClear(GL_COLOR_BUFFER_BIT);
-
-	gluLookAt(0.0, 0.0, 5.0, 0, 0, 0, 0, 1, 0);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	//Rendering Command
-	DrawTriangle(0.0f, 1.0f, 0.0f, -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f);
-
-	//glFlush(); -- Commented single buffer api
+	glViewport(50, 50, 10, 10);
+	//glFlush();
 	SwapBuffers(ghdc);
 }
 
@@ -308,12 +292,8 @@ void resize(int width, int height)
 	if (height == 0)
 		height = 1;
 
-	glViewport(0, 0, (GLsizei)width, (GLsizei)height);
+	glViewport(50, 50, 10, 10);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	
-	gluPerspective(0, ((GLfloat)width /(GLfloat)height), 0.1, 100.0);
 }
 
 void uninitialize()

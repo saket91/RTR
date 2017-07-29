@@ -3,22 +3,92 @@
 #include <gl/GLU.h>
 
 #define WIN_WIDTH  800
-#define WIN_HEIGHT 600
+#define WIN_HEIGHT 800
 
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"glu32.lib")
 
-// Function for drawing filled triangle
-// This function only  draws the triangle doesn't change color
-void DrawTriangle(GLfloat point1X, GLfloat point1Y, GLfloat point1Z,
+#define _USE_MATH_DEFINES
+#include "math.h"
+
+float angle = 0.0f;
+
+//Functions
+void update()
+{
+	angle += 0.1f;
+	if (angle > 360)
+		angle=0.0;
+}
+
+
+float ComputeVectorLength(float x, float y, float z)
+{
+	return sqrt((x*x) + (y*y) + (z*z));
+}
+
+void DrawWiredCircleByLine(GLfloat centerX, GLfloat centerY, GLfloat centerZ, GLfloat radius)
+{
+	glBegin(GL_LINE_LOOP);
+	{
+		for (float angle = 0; angle < 2 * M_PI; angle = angle + 0.01f)
+		{
+			glVertex3f(centerX + radius*sin(angle), centerY + radius*cos(angle), 0.0f);
+		}
+
+	}glEnd();
+}
+
+void DrawWiredTriangle(GLfloat point1X, GLfloat point1Y, GLfloat point1Z,
 	GLfloat point2X, GLfloat point2Y, GLfloat point2Z,
 	GLfloat point3X, GLfloat point3Y, GLfloat point3Z)
 {
-	glBegin(GL_TRIANGLES);
+	glBegin(GL_LINES);
 	{
 		glVertex3f(point1X, point1Y, point1Z);
 		glVertex3f(point2X, point2Y, point2Z);
+		glVertex3f(point2X, point2Y, point2Z);
 		glVertex3f(point3X, point3Y, point3Z);
+		glVertex3f(point3X, point3Y, point3Z);
+		glVertex3f(point1X, point1Y, point1Z);
+	}glEnd();
+}
+
+void DrawSymbol(float point1X, float point1Y, float point1Z,
+	float point2X, float point2Y, float point2Z,
+	float point3X, float point3Y, float point3Z)
+{
+
+	DrawWiredTriangle(point1X, point1Y, point1Z,
+		point2X, point2Y, point2Z,
+		point3X, point3Y, point3Z);
+
+
+
+	float side1 = ComputeVectorLength(point1X - point2X, point1Y - point2Y, point1Z - point2Z);
+	float side2 = ComputeVectorLength(point3X - point2X, point3Y - point2Y, point3Z - point2Z);;
+	float side3 = ComputeVectorLength(point1X - point3X, point1Y - point3Y, point1Z - point3Z);;
+
+	float centroidX = (point1X + point2X + point3X) / 3.0f;
+	float centroidY = (point1Y + point2Y + point3Y) / 3.0f;
+	float centroidZ = (point1Z + point2Z + point3Z) / 3.0f;
+
+	float a = (point1Y - point2Y);
+	float b = (point2X - point1X);
+	float c = (point1X*point2Y) - (point2X*point1Y);
+
+	float rad = fabs(a*centroidX + b*centroidY + c) / (sqrt(a*a + b*b));
+
+	DrawWiredCircleByLine(centroidX, centroidY, centroidZ, rad);
+
+	float midpointX = (point2X + point3X) / 2;
+	float midpointY = (point2Y + point3Y) / 2;
+	float midpointZ = (point2Z + point3Z) / 2;
+
+	glBegin(GL_LINES);
+	{
+		glVertex3f(point1X, point1Y, point1Z);
+		glVertex3f(midpointX, midpointY, midpointZ);
 	}glEnd();
 }
 
@@ -76,9 +146,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 	//Create Window
 	hwnd = CreateWindowEx(WS_EX_APPWINDOW,
 		szClassName,
-		TEXT("OpenGL Fixed Function Pipeline using Native Windowing "),
+		TEXT("OpenGL Fixed Function Pipeline using Native Windowing : First Window"),
 		WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE,
-		600,
+		0,
 		0,
 		WIN_WIDTH,
 		WIN_HEIGHT,
@@ -115,6 +185,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLi
 			{
 				if (gbEscapeKeyIsPressed == true)
 					bDone = true;
+				update();
 				display();
 			}
 		}
@@ -290,15 +361,15 @@ void display(void)
 	//code 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	gluLookAt(0.0, 0.0, 5.0, 0, 0, 0, 0, 1, 0);
-
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	glTranslatef(0, 0, -3);
+	glRotatef(angle, 0, 1, 0);
 	//Rendering Command
-	DrawTriangle(0.0f, 1.0f, 0.0f, -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f);
+	DrawSymbol(0.0f, 1.0f, 0.0f, -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f);
 
-	//glFlush(); -- Commented single buffer api
+	//glFlush();
 	SwapBuffers(ghdc);
 }
 
@@ -312,8 +383,8 @@ void resize(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	
-	gluPerspective(0, ((GLfloat)width /(GLfloat)height), 0.1, 100.0);
+
+	gluPerspective(45, (GLfloat)width / (GLfloat)height, 0.1, 100);
 }
 
 void uninitialize()

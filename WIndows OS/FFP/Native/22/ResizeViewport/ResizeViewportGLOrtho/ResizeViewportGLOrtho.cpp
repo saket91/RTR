@@ -1,12 +1,10 @@
 #include <Windows.h>
 #include <gl/GL.h>
-#include <gl/GLU.h>
 
 #define WIN_WIDTH  800
 #define WIN_HEIGHT 600
 
 #pragma comment(lib,"opengl32.lib")
-#pragma comment(lib,"glu32.lib")
 
 // Function for drawing filled triangle
 // This function only  draws the triangle doesn't change color
@@ -290,13 +288,12 @@ void display(void)
 	//code 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	gluLookAt(0.0, 0.0, 5.0, 0, 0, 0, 0, 1, 0);
-
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
 	//Rendering Command
-	DrawTriangle(0.0f, 1.0f, 0.0f, -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f);
+
+	DrawTriangle(0.0f, 50.0f, 0.0f, -50.0f, -50.0f, 0.0f, 50.0f, -50.0f, 0.0f);
 
 	//glFlush(); -- Commented single buffer api
 	SwapBuffers(ghdc);
@@ -308,12 +305,32 @@ void resize(int width, int height)
 	if (height == 0)
 		height = 1;
 
+	if (width == 0)
+		width = 1;
+	
+	GLfloat left = -50.0;
+	GLfloat right = 50.0;
+	GLfloat bottom = -50.0;
+	GLfloat top = 50.0;
+	
+
+	if (width < height)
+	{
+		bottom = bottom * ((GLfloat)height / (GLfloat)width);
+		top = top * ((GLfloat)height / (GLfloat)width);
+	}
+	else
+	{
+		left = left * ((GLfloat)width / (GLfloat)height);
+		right = right * ((GLfloat)width / (GLfloat)height);
+	}
+
 	glViewport(0, 0, (GLsizei)width, (GLsizei)height);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	
-	gluPerspective(0, ((GLfloat)width /(GLfloat)height), 0.1, 100.0);
+
+	glOrtho(left, right, bottom, top, -50.0, 50.0);
 }
 
 void uninitialize()

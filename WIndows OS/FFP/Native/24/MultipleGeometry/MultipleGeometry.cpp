@@ -16,9 +16,28 @@ void DrawTriangle(GLfloat point1X, GLfloat point1Y, GLfloat point1Z,
 {
 	glBegin(GL_TRIANGLES);
 	{
+		glColor3f(1, 0, 0);
+		glVertex3f(point1X, point1Y, point1Z);
+		glColor3f(0, 1, 0);
+		glVertex3f(point2X, point2Y, point2Z);
+		glColor3f(0, 0, 1);
+		glVertex3f(point3X, point3Y, point3Z);
+	}glEnd();
+}
+
+void DrawFilledRectangle(
+	GLfloat point1X, GLfloat point1Y, GLfloat point1Z,
+	GLfloat point2X, GLfloat point2Y, GLfloat point2Z,
+	GLfloat point3X, GLfloat point3Y, GLfloat point3Z,
+	GLfloat point4X, GLfloat point4Y, GLfloat point4Z)
+{
+	glBegin(GL_QUADS);
+	{
+		glColor3f(100.0f / 255.0f, 149.0f / 255.0f, 237.0f / 255.0f);
 		glVertex3f(point1X, point1Y, point1Z);
 		glVertex3f(point2X, point2Y, point2Z);
 		glVertex3f(point3X, point3Y, point3Z);
+		glVertex3f(point4X, point4Y, point4Z);
 	}glEnd();
 }
 
@@ -290,14 +309,24 @@ void display(void)
 	//code 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	gluLookAt(0.0, 0.0, 5.0, 0, 0, 0, 0, 1, 0);
-
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	glTranslatef(-1.5f, 0.0f, -6.0f);
 
 	//Rendering Command
 	DrawTriangle(0.0f, 1.0f, 0.0f, -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f);
 
+	glLoadIdentity();
+
+	glTranslatef(1.5f, 0.0f, -6.0f);
+
+	DrawFilledRectangle(
+		-1.0f, 1.0f, 0.0f,
+		-1.0f, -1.0f, 0.0f,
+		1.0f, -1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f
+	);
 	//glFlush(); -- Commented single buffer api
 	SwapBuffers(ghdc);
 }
@@ -312,8 +341,7 @@ void resize(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	
-	gluPerspective(0, ((GLfloat)width /(GLfloat)height), 0.1, 100.0);
+	gluPerspective(45, ((GLfloat)width / (GLfloat)height), 0.1, 100.0);
 }
 
 void uninitialize()

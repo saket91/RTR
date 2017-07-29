@@ -19,11 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3D27042C-03A7-4660-93E2-643882037DE6}</ProjectGuid>
+    <ProjectGuid>{918E29F0-A51B-4405-90F2-3B2E82A278FF}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>TriangleSize50Projection50</RootNamespace>
+    <RootNamespace>RotateMultipleGeometry</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
-    <ProjectName>TriangleSize1WithGLFrustum</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -147,7 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="TriangleSize1WithGLFrustum.cpp" />
+    <ClCompile Include="RotateMultipleGeometries.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

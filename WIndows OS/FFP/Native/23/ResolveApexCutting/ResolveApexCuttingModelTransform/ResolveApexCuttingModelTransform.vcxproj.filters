@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TriangleSize1WithGLFrustum.cpp">
+    <ClCompile Include="ResolveApexCuttingModelTransform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
